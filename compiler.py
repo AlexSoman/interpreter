@@ -9,14 +9,15 @@ import math
 path = "input.txt "
 count = 0
 i = 0
-ifwhilecount = 0
 disable = -1
-enable = []
+call_stack = []
 def check_is_string(string):
     if(not check_is_num(string)):
         return string[0] == "\""
     return False
 def check_is_num(string):
+    if(string == "inf" or string == "-inf" or string == "nan"):
+        return False
     try:
         float(string)
         return True
@@ -157,26 +158,7 @@ def append(list):
         return "\""+list[0][1:]+list[1][1:]
     else:
         traceback("Parameters must be strings dumbass")
-built_in_functions = {
-    "print":(1,p),
-    "len":(1,length),
-    "add":(2,add),
-    "subtract":(2,subtract),
-    "mult":(2,multiply),
-    "div":(2,divide),
-    "pow":(2,power),
-    "log":(2,log),
-    "sin":(1,sin),
-    "cos":(1,cos),
-    "tan":(1,tan),
-    "floor":(1,floor),
-    "ceil":(1,ceil),
-    "num":(1,num),
-    "str":(1,string),
-    "substring":(3,substring),
-    "contains":(2,contains),
-    "append":(2,append)
-}
+built_in_functions = {"print":(1,p),"len":(1,length),"add":(2,add),"subtract":(2,subtract),"mult":(2,multiply),"div":(2,divide),"pow":(2,power),"log":(2,log),"sin":(1,sin),"cos":(1,cos),"tan":(1,tan),"floor":(1,floor),"ceil":(1,ceil),"num":(1,num),"str":(1,string),"substring":(3,substring),"contains":(2,contains),"append":(2,append)}
 
 variables = {
     "last": 1.0
@@ -210,7 +192,7 @@ def traceback(message):
 with open(path, "r") as file:
     lines = file.readlines()
     while  i < len(lines):
-        line =better_split(lines[i].strip())
+        line =better_split(lines[i].strip().lstrip())
         #print(line)
         # things to do with each line
         # var - variable assignment
@@ -234,7 +216,10 @@ with open(path, "r") as file:
                         elif(check_is_string(line[2])):
                             variables[line[1]] = line[2]
                         elif(check_is_num(line[2])):
-                            variables[line[1]] = float(line[2])
+                            if(int(line[2]) == float(line[2])):
+                                variables[line[1]] = int(line[2])
+                            else:
+                                variables[line[1]] = float(line[2])
                         else:
                             traceback("Dont recognize your value dumbass")
                     except:
@@ -244,83 +229,60 @@ with open(path, "r") as file:
         elif(line[0] == "def"and disable == -1):
             # function definition
             pass
-        elif(line[0] == "if"):
+        elif(line[0] == "if" or line[0] == "while"):
             # conditional statement
-            if(disable != -1):
-                ifwhilecount+=1
-            elif(len(line)-1 < 3):
-                traceback("Too few arguments for conditional dumbass")
-            else:
-                if(line[1] not in variables or line[3] not in variables):
-                    traceback("DONT SEE THE ARGUMENTS IN VARIABLES DUMBASS!")
+            call_stack.append(i)
+            if (disable == -1):
+                if(len(line)-1 < 3):
+                    traceback("Too few arguments for conditional dumbass")
                 else:
-                    if((not check_is_num(variables[line[1]])) or (not check_is_num(variables[line[3]]))):
-                        traceback("Arguments must be numbers dumbass")
-                    else:
-                        if(line[2] == "="):
-                            if(not (variables[line[1]] == variables[line[3]])):
-                                disable = -2
-                        elif(line[2] == "<"):
-                            if(not (variables[line[1]] < variables[line[3]])):
-                                disable = -2
-                        elif(line[2] == ">"):
-                           if(not (variables[line[1]] > variables[line[3]])):
-                                disable = -2
-                        elif(line[2] == "<="):
-                            if(not (variables[line[1]] <= variables[line[3]])):
-                                disable = -2
-                        elif(line[2] == ">="):
-                            if(not (variables[line[1]] >= variables[line[3]])):
-                                disable = -2
-                        elif(line[2] == "!="):
-                            if(not (variables[line[1]] != variables[line[3]])):
-                                disable = -2
+                    lazy = []
+                    for j in [1,3]:
+                        if(line[j] in variables):
+                            lazy.append(variables[line[j]])
+                        elif(check_is_num(line[j])):
+                            if(int(line[j]) == float(line[j])):
+                                lazy.append(int(line[j]))
+                            else:
+                                lazy.append(float(line[j]))
+                        elif(check_is_string(line[j])):
+                            lazy.append(line[j])
                         else:
-                            traceback("UNRECOGNIZED OPERATOR DUMBASS")
-        elif(line[0] == "while"):
-            # loop statement
-            if(disable != -1):
-                ifwhilecount+=1
-            elif(len(line)-1 < 3):
-                traceback("Too few arguments for conditional dumbass")
-            else:
-                if(line[1] not in variables or line[3] not in variables):
-                    traceback("DONT SEE THE ARGUMENTS IN VARIABLES DUMBASS!")
-                else:
-                    if((not check_is_num(variables[line[1]])) or (not check_is_num(variables[line[3]]))):
-                        traceback("Arguments must be numbers dumbass")
+                            traceback("Token "+str(j)+" is not a recognized variable, number, or int")
+                    if((check_is_string(lazy[0]) and check_is_num(lazy[1])) or (check_is_string(lazy[1]) and check_is_num(lazy[0]))):
+                        traceback("arguments are opposite types dumbass")
+                    if(line[2] == "="):
+                        if(not (lazy[0] == lazy[1])):
+                            disable = i
+                    elif(line[2] == "<"):
+                        if(not (lazy[0]  < lazy[1])):
+                            disable = i
+                    elif(line[2] == ">"):
+                        if(not (lazy[0]  > lazy[1])):
+                            disable = i
+                    elif(line[2] == "<="):
+                        if(not (lazy[0]  <= lazy[1])):
+                            disable = i
+                    elif(line[2] == ">="):
+                        if(not (lazy[0]  >= lazy[1])):
+                            disable = i
+                    elif(line[2] == "!="):
+                        if(not (lazy[0]  != lazy[1])):
+                            disable = i
                     else:
-                        if(line[2] == "="):
-                            if(not (variables[line[1]] == variables[line[3]])):
-                                disable = i
-                        elif(line[2] == "<"):
-                            if(not (variables[line[1]] < variables[line[3]])):
-                                disable = i
-                        elif(line[2] == ">"):
-                            if(not (variables[line[1]] > variables[line[3]])):
-                                disable = i
-                        elif(line[2] == "<="):
-                            if(not (variables[line[1]] <= variables[line[3]])):
-                                disable = i
-                        elif(line[2] == ">="):
-                            if(not (variables[line[1]] >= variables[line[3]])):
-                                disable = i
-                        elif(line[2] == "!="):
-                            if(not (variables[line[1]] != variables[line[3]])):
-                                disable = i
-                        else:
-                            traceback("UNRECOGNIZED OPERATOR DUMBASS")
-                        if(disable == -1):
-                            enable.append(i)
+                        traceback("UNRECOGNIZED OPERATOR DUMBASS")
         elif(line[0] == "done"):
+            try:
+                temp = call_stack.pop() #stores what conditional done is referencing
+            except:
+                traceback("Done statement has no corresponding conditional dumbass")
             if(disable!=-1):
-                if(ifwhilecount == 0):
+                if(disable == temp): #checks if the done is part of the conditional that is disabled (will be false if part of a nested conditional)
                     disable = -1
-                else:
-                    ifwhilecount-=1
             else:
-                if(len(enable) != 0):
-                    i = enable.pop()
+                if(better_split(lines[temp].strip().lstrip())[0] == "while"):
+                    i = temp
+                    continue
         elif(line[0] == "exit"and disable == -1):
             _exit(0)
         elif(line[0] == "call"and disable == -1):
@@ -331,11 +293,20 @@ with open(path, "r") as file:
                     else:
                         inp = []
                         for j in range(2,2+built_in_functions[line[1]][0]):
-                            if(line[j] not in variables):
-                                traceback("Parameter "+str(j-1)+" is not a recognized variable")
-                            else:
+                            if(line[j] in variables):
                                 inp.append(variables[line[j]])
+                            elif(check_is_string(line[j])):
+                                inp.append(line[j])
+                            elif(check_is_num(line[j])):
+                                if(int(line[j]) == float(line[j])):
+                                    inp.append(int(line[j]))
+                                else:
+                                    inp.append(float(line[j]))
+                            else:
+                                traceback("Parameter "+str(j-1)+" is not a recognized variable, string or number ")
                         variables["last"] = built_in_functions[line[1]][1](inp)
+                        if(check_is_num(variables["last"]) and int(variables["last"]) == float(variables["last"])):
+                            variables["last"] = int(variables["last"])
                 else:
                     traceback("UNRECOGNIZED FUNCTION DUMBASS")
             except:
