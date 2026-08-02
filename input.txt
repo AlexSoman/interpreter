@@ -1,0 +1,19 @@
+var|1|1
+var|count|0
+var|limit|3
+var|pookie|"AVERY IS A GOOD POOKIE BEAR
+var|tony|"PONYS TONY
+while|count|<|limit
+var|count2|0
+while|count2|<|limit
+if|count2|<|count
+call|print|tony
+done
+call|add|count2|1
+var|count2|last
+done
+call|add|count|1
+var|count|last
+call|print|pookie
+call|len|pookie
+done
