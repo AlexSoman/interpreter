@@ -1,15 +1,17 @@
-var|count|0
-var|limit|10
-while|count|<|limit
-    var|count2|0
-    while|count2|<|limit
-        if|count|<|count2
-            call|print|"PONYS TONY
+def|call|limit|print
+    var|count|0
+    while|count|<|limit
+        var|count2|0
+        while|count2|<|limit
+            if|count|<|count2
+                call|print|print
+            done
+            call|add|count2|1
+            var|count2|last
         done
-        call|add|count2|1
-        var|count2|last
+        call|add|count|1
+        var|count|last
+        call|print|last
     done
-    call|add|count|1
-    var|count|last
-    call|print|last
 done
+call|call|10|"IM HIM
