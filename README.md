@@ -102,6 +102,29 @@ Only difference between if and while is that once the interpretor reaches the co
 Command 6: def
 
 
+Ex: def|function name| parameter 1| parameter 2
+
+Used to define a custom function. The first chunk after def is the function's name, and all other chunks will be set as the parameters. The rest of the lines are disabled until the function's corresponding done statement. (MUST HAVE A CORRESPONDING DONE STATEMENT)
+
+Notes: Parameters cannot begin with " or |. You also cant put comments on def statements since the interpretor will consider them as parameters.
+
+Since all variables are global, it is better to have parameter names be unique to variable names.
+
+Extra restrictions/notes to parameters can be found in previous instructions.
+
+Functions are only defined once the parameter reaches the def statement for the first time. So if you define a function in another function/ conditional, it can only be used if the other function is called/ conditional turns true.
+
+All functions have global domain, and once defined cannot be reset. The only way to have 2 functions defined with the same name is if one is in a conditional/function that is never called.
+
+The recursion limit for functions is 467. I dunno why its this number but after this many calls my custom recursion depth error message stops printing so yeah. 
+
+
+Command 7: call
+
+
+Ex: call|print|"YES!!!
+
+
 
 TODO: 
 1. put syntax into the readme
