@@ -124,7 +124,23 @@ Command 7: call
 
 Ex: call|print|"YES!!!
 
+Calls a function. The function can either be a built-in function or custom function. The first chunk after call must be the function names, and you must provide all the parameters. The variable last will take in the return value of the function, and if the function has none then last will be set equal to one. Parameters can be either strings or ints.
 
+Here are all the built-in functions. Most are pretty obvious in what they do, and will error if provided the wrong type of parameter or for other reasons (ex: divide by zero) so I wont add notes unless I think neccesary (this is MY documentation). There are also no operators in my language (like + or *), you have to use functions which is why this language sucks and why the interpreter is so small).
+
+add: takes 2 parameters
+
+subtract: takes 2 parameters
+
+mult: multiplys 2 parameters
+
+div: divides 2 parameters (numerator then denominator).
+
+print: prints 1 parameter
+
+len: finds the length of a string
+
+exit
 
 TODO: 
 1. put syntax into the readme
