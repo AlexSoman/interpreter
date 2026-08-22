@@ -5,10 +5,12 @@ Has no name right now
 Completely useless and will probably be slow, so don't actually program in it unless ur insane or me.
 
 To run, make sure both compiler.py and input.txt are in the same folder on your device. Input the code into input.txt and run compiler.py; you should see the output on your terminal
+
 Syntax/Instructions/Explanation of inner workings:
+
 The interpreter compiles line by line. It ignores trailing and leading whitespace.
 
-Each line must be separated into chunks spaced apart by the | symbol.
+Each line must be separated into chunks spaced apart by the | symbol. If you wish to put this symbol in a string, variable name, parameter name or function name, put 2 next to each other (ex: ||) and the interpreter will read it as a | symbol rather than a divider. Note that this will not work if you want to put this symbol at the beginning of a variable name, parameter name or function name, as the interpreter will believe the symbol is part of an earlier chunk.
 
 The first chunk of each line must tell the interpreter what you intend to do.
 
@@ -25,15 +27,83 @@ Command 1: var
 
 This command allows you to create a variable. The first chunk is the variable name, and the second chunk is the value.
 
-variable names cannot begin with | or ".
+Variable names cannot begin with " (or |).
+if the variable name is a parameter of a custom function, the parameter's value will be changed.
 
 if the second chunk is a parameter of a custom function or variable, the variable will be set to the value of the parameter/other variable. 
 
 Note: if a parameter and variable have the same name and are passed into the second chunk, the parameter takes priority. Likewise if a parameter/variable has the name of a number (Ex: 1, and yes parameters/variables can be numbers), the parameter/variable take priority (parameter first, then variable, then number).
 
-if the second chunk is not a variable, it can either be a string or an int. Strings always begin with a " symbol (THEY DO NOT END WITH THAT SYMBOL). 
+if the second chunk is not a variable, it can either be a string or a number. Strings always begin with a " symbol (THEY DO NOT END WITH THAT SYMBOL). Numbers are either ints or floats, which you write in their standard decimal notation. (ex: var|test|3.14 or var|test|3).
+
+There is one special variable called last. This variable stores the return value of the last function call. If the last function returns nothing, then it stores the value 1. Be careful when accessing it.
+
+Notes: 
+All variables have global domain, so try to keep parameter names different from variables. 
+if a variable/parameter name is a number that does not equal itself. (ex: var|12|11), it is very hard to reset and locks you out of using that value (in this example: 12) since variables/parameters take priority. To reset it, call any math function to set last equal to the value, then assign it to the variable.
+
+Ex:
+
+call|mult|4|3
+
+var|12|last
+
+If a variable gets set to a float, but the float equals an int, the interpreter will set it equal to an int in the backend automatically (this is true for all commands). This is probably a stupid idea since there are good reasons to keep ints and floats separate, but all my built-in functions do algebraic manipulation, and I think Python can handle those between ints and floats well, so we are just going to roll with it.
+End notes.
+
+
+Command 2: return
+
+
+EX: return|"Yes
+
+returns a value. Can be a parameter, variable, string or number, with that priority order. If used outside a custom function, the program will merely exit (or you can use the built-in exit function).
+
+Note: From here on I will just say string and int, just know that you can pass in a parameter or variable in their place too and remember the priority order.
+
+Command 3: done
+
+used to end an if, while or def statement. if, while or def statements can be nested so long as each statement has a corresponding done. ALL OF THESE STATEMENTS MUST HAVE A CORRESPONDING done STATEMENT.
+
+
+Command 4: if
+
+
+EX: if|1|<|2
+
+Conditional statements. Chunks 2 and 4 must either be both strings or both ints.
+
+The operator in chunk 3 can either be 
+
+ = : same as pythons ==
+ 
+ < : same as python
+ 
+ > : same as python
+
+ <= : same as python
+ 
+ >= : same as python
+
+The comparisons work just like how python does it so go look that up Im too lazy to write this documentation.
+
+This STATEMENT MUST HAVE A DONE STATEMENT CORRESPONDING TO IT.
+
+Works like a conditional statement. if the condition in the if statement is false, then the interpreter will disable all lines up until the corresponding done statement.
+
+Note: Since the interpreter ignores disabled lines, you can put multi line comments by having an if statement that is always disabled, then put whatever you want inside it.
+
+
+Command 5: while
+
+
+Only difference between if and while is that once the interpretor reaches the corresponding done, it goes back to the while statements and reevaluates the lines until the while statement is false. Other than that it works EXACTLY THE SAME.
+
+Command 6: def
+
+
 
 TODO: 
 1. put syntax into the readme
-2. lists and some more useful built in functions
+2. lists and some more useful built-in functions
 3. make some fractal in ur own language. 
