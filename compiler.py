@@ -1,10 +1,3 @@
-# this language shall pride itself as being conveniant for the developer only.
-#no putting | at the beggining of variables/ functions
-#last is a special variable that equals the return value of the last function called. If no return value then it will equals 1. Be careful when referencing it.
-#variables that are numbers are hard to reset if they do not equal their value
-# variables/functions that are only made of whitespace in them should have a | at the end to prevent being cutoff.
-#all variables/functions are global, and parameters hold priority over variables so be careful.
-#recursion limit is 467 since otherwise my error message wont print and im not entirely sure why (nor do I care)
 from os import _exit
 import math
 def check_is_string(string):
@@ -205,10 +198,8 @@ def traceback(traceback_i,lines,message):
     output+="On line " +str(traceback_i[len(traceback_i)-1]+1)+": "+lines[traceback_i[len(traceback_i)-1]].strip().lstrip()+"\n"+message
     print(output)
     _exit(0)
-variables = {
-    "last": 1.0
-}
-def logic(in_function = True,count = 0,parameters = {},traceback_i = [0]):
+variables = {"last": 1.0}
+def logic(count = 0,parameters = {},traceback_i = [0]):
     i = count
     disable = -1
     disable_stack = []
@@ -299,7 +290,7 @@ def logic(in_function = True,count = 0,parameters = {},traceback_i = [0]):
                 try:
                     temp =  disable_stack.pop() #stores what conditional done is referencing
                 except:
-                    if(in_function):
+                    if(count != 0): # if count = 0, we are not in a function.
                         return 1
                     else:
                         traceback(traceback_i,lines,"Done statement has no corresponding conditional dumbass")
@@ -337,7 +328,7 @@ def logic(in_function = True,count = 0,parameters = {},traceback_i = [0]):
                             traceback_i.append(functions_start[line[1]])
                             if(len(traceback_i) >= 467):
                                 traceback(traceback_i,lines,"Recursion Limit error dumbass")
-                            variables["last"] = logic(count = functions_start[line[1]],parameters=inp,traceback_i=traceback_i)
+                            variables["last"] = logic(functions_start[line[1]],inp,traceback_i)
                             traceback_i.pop()
                             if(check_is_num(variables["last"]) and int(variables["last"]) == float(variables["last"])):
                                 variables["last"] = int(variables["last"])
@@ -350,6 +341,6 @@ def logic(in_function = True,count = 0,parameters = {},traceback_i = [0]):
                 if(disable == -1 and line != ['']):
                     traceback(traceback_i,lines,"You didnt put a command we recognize (You cant have lines at the beginning of variables or functions)")
             i+=1
-        if(better_split(lines[disable].strip().lstrip())[0] == "def"):
-            traceback(traceback_i,lines,"Function "+lines[disable].strip().lstrip()+" on line "+str(disable+1)+" has no corresponding done statement")
-logic(False)
+        if(disable != -1):
+            traceback(traceback_i,lines,"Statement "+lines[disable].strip().lstrip()+" on line "+str(disable+1)+" has no corresponding done statement")
+logic()
