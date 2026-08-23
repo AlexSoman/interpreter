@@ -1,17 +1,58 @@
-def|call|limit|print
-    var|count|0
-    while|count|<|limit
-        var|count2|0
-        while|count2|<|limit
-            if|count|<|count2
-                call|print|print
-            done
-            call|add|count2|1
-            var|count2|last
+var|width|150
+var|height|150
+var|max iter|30
+var|i|0
+def|determine|x|y
+    var|iter|0
+    while|iter|<|max iter
+        call|mult|x|x
+        var|temp1|last
+        call|mult|y|y
+        call|subtract|temp1|last
+        call|add|last|x0
+        var|xtemp|last
+        call|mult|x|y
+        call|mult|2|last
+        call|add|last|y0
+        var|y|last
+        var|x|xtemp
+        call|mult|x|x
+        var|temp2|last
+        call|mult|y|y
+        call|add|temp2|last
+        if|last|>|4
+            return|"no
         done
-        call|add|count|1
-        var|count|last
-        call|print|last
+        call|add|iter|1
+        var|iter|last
     done
+    return|"yes
 done
-call|call|10|"IM HIM
+while|i|<|height
+    var|j|0
+    var|output|"
+    while|j|<|width
+        call|div|i|height
+        call|mult|last|2.24
+        call|subtract|last|1.12
+        var|y0|last
+        call|div|j|width
+        call|mult|last|2.47
+        call|subtract|last|2
+        var|x0|last
+        call|determine|x0|y0
+        var|result|last
+        if|result|=|"yes
+            call|append|output|"#
+        done
+        if|result|=|"no
+            call|append|output|" |
+        done
+        var|output|last
+        call|add|j|1
+        var|j|last
+    done
+    call|print|output
+    call|add|i|1
+    var|i|last
+done
