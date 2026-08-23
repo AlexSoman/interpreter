@@ -120,7 +120,7 @@ Functions are only defined once the parameter reaches the def statement for the 
 
 All functions have global domain, and once defined cannot be reset. The only way to have 2 functions defined with the same name is if one is in a conditional/function that is never called.
 
-The recursion limit for functions is 467. I dunno why its this number but after this many calls my custom recursion depth error message stops printing so yeah. 
+The recursion limit for functions is 464. I dunno why its this number but after 465 calls my custom recursion depth error message stops printing so yeah. 
 
 
 Command 7: call
