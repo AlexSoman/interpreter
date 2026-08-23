@@ -10,7 +10,7 @@ To run, make sure both compiler.py and input.txt are in the same folder on your 
 
 Syntax/Instructions/Explanation of inner workings:
 
-(Look at input.txt for some example code).
+(Look at input.txt for some example code, which makes the Mandelbrot set).
 
 The interpreter compiles line by line. It ignores trailing and leading whitespace.
 
