@@ -1,6 +1,8 @@
 A programming language I made for the fun of it. It runs Python in the backend.
 
-Has no name right now
+Called Dumbass355, cause every error message insults you and it was done in 355 lines of python code. (1/2 of which is just built in functions).
+
+I winged this shit in 5 days, took a 2 week break, then finished it in like 2 more days. No ai or research on how good interpreters actually work (very smart of me).
 
 Completely useless and will probably be slow, so don't actually program in it unless ur insane or me.
 
@@ -126,23 +128,48 @@ Ex: call|print|"YES!!!
 
 Calls a function. The function can either be a built-in function or custom function. The first chunk after call must be the function names, and you must provide all the parameters. The variable last will take in the return value of the function, and if the function has none then last will be set equal to one. Parameters can be either strings or ints.
 
-Here are all the built-in functions. Most are pretty obvious in what they do, and will error if provided the wrong type of parameter or for other reasons (ex: divide by zero) so I wont add notes unless I think neccesary (this is MY documentation). There are also no operators in my language (like + or *), you have to use functions which is why this language sucks and why the interpreter is so small).
+Here are all the built-in functions. Most are pretty obvious in what they do, and will error if provided the wrong type of parameter or for other reasons (ex: divide by zero). There are also no operators in my language (like + or *), you have to use functions which is why this language sucks and why the interpreter is so small).
 
-add: takes 2 parameters
+add: adds 2 numbers
 
-subtract: takes 2 parameters
+subtract: subtracts 2 numbers
 
-mult: multiplys 2 parameters
+mult: multiply 2 numbers
 
-div: divides 2 parameters (numerator then denominator).
+div: divides 2 numbers (numerator then denominator)
 
-print: prints 1 parameter
+pow: takes the power of 2 numbers (first is base, second is exponent)
 
-len: finds the length of a string
+log: takes the logarithm of the 2 numbers (first is the base)
 
-exit
+sin: takes the sine of a number
+
+cos: takes the cosine of a number
+
+tan: takes the tangent of a number
+
+floor: rounds the number down
+
+ceil: rounds the number up
+
+num: converts a string into a number
+
+str: converts a number into a string
+
+substring: takes a substring of a string. (first is the string, next 2 are the start and end indices) (works just like Python).
+
+contains: checks if the first string is in the second string (case-sensitive)
+
+append: concatenates the second string onto the first
+
+
+
+Should an error occur, the error message will include the line number, the text on that line and the reason for the error. There is also a traceback stack in case the error happenend in a custom function. It will also call you a dumbass.
+
+Explanation of inner workings
+
+Used python so I dont need to do any low level stuff or make a compiler for every single hardware architecture. I made a custom split function to handle my notation, made 2 stacks (that are actually lists) to handle nested statements and errors, had a couple dictionaries to handle storing variables and functions, and put all the interpretor logic in a function so that I could recall it for custom functions. Also had to edit python built-in functions to handle my notation and put a gazillion try-excepts and if-elif-else chains to handle errors. Rest is obvious stuff go figure it out.
 
 TODO: 
-1. put syntax into the readme
-2. lists and some more useful built-in functions
-3. make some fractal in ur own language. 
+1. lists and some more useful built-in functions (only if I have to I dont wanna change the title name)>
+2. make some fractal in ur own language. 
