@@ -77,15 +77,15 @@ Conditional statements. Chunks 2 and 4 must either be both strings or both ints.
 
 The operator in chunk 3 can either be 
 
- = : same as pythons ==
+ (= : same as pythons ==)
  
- < : same as python
+ (< : same as python)
  
- > : same as python
+ (> : same as python)
 
- <= : same as python
+ (<= : same as python)
  
- >= : same as python
+ (>= : same as python)
 
 The comparisons work just like how python does it so go look that up Im too lazy to write this documentation.
 
