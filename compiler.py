@@ -158,7 +158,7 @@ def get_val(traceback_i,lines,value,trace,parameters):
     elif(check_is_string(value)):
         val = value
     elif(check_is_num(value)):
-        if(int(value) == float(value)):
+        if(int(float(value)) == float(value)):
             val = int(value)
         else:
             val= float(value)
@@ -316,7 +316,7 @@ def logic(count = 0,parameters = {},traceback_i = [0]):
                             for j in range(2,2+built_in_functions[line[1]][0]):
                                 inp.append(get_val(traceback_i,lines,line[j],"Parameter "+str(j-1)+" is not a recognized variable, string or number dumbass",parameters))
                             variables["last"] = built_in_functions[line[1]][1](traceback_i,lines,inp)
-                            if(check_is_num(variables["last"]) and int(variables["last"]) == float(variables["last"])):
+                            if(check_is_num(variables["last"]) and int(float(variables["last"])) == float(variables["last"])):
                                 variables["last"] = int(variables["last"])
                     elif(line[1] in functions):
                         if(len(line)-2 < len(functions[line[1]])):
@@ -330,7 +330,7 @@ def logic(count = 0,parameters = {},traceback_i = [0]):
                                 traceback(traceback_i,lines,"Recursion Limit error dumbass")
                             variables["last"] = logic(functions_start[line[1]],inp,traceback_i)
                             traceback_i.pop()
-                            if(check_is_num(variables["last"]) and int(variables["last"]) == float(variables["last"])):
+                            if(check_is_num(variables["last"]) and int(float(variables["last"])) == float(variables["last"])):
                                 variables["last"] = int(variables["last"])
                     else:
                         traceback(traceback_i,lines,"UNRECOGNIZED FUNCTION DUMBASS")
