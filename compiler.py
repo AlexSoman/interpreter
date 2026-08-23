@@ -31,7 +31,7 @@ def add(traceback_i,lines,list):
         else:
             traceback(traceback_i,lines,"A parameter aint a number dumbass")
     except:
-        traceback(traceback_i,lines,"Number out of bounds")
+        traceback(traceback_i,lines,"Number out of bounds dumbass")
 def subtract(traceback_i,lines,list):
     try:
         if(check_is_num(list[0]) and check_is_num(list[1])):
@@ -39,7 +39,7 @@ def subtract(traceback_i,lines,list):
         else:
             traceback(traceback_i,lines,"A parameter aint a number dumbass")
     except:
-        traceback(traceback_i,lines,"Number out of bounds")
+        traceback(traceback_i,lines,"Number out of bounds dumbass")
 def multiply(traceback_i,lines,list):
     try:
         if(check_is_num(list[0]) and check_is_num(list[1])):
@@ -47,7 +47,7 @@ def multiply(traceback_i,lines,list):
         else:
             traceback(traceback_i,lines,"A parameter aint a number dumbass")
     except:
-        traceback(traceback_i,lines,"Number out of bounds")
+        traceback(traceback_i,lines,"Number out of bounds dumbass")
 def divide(traceback_i,lines,list):
     try:
         if(check_is_num(list[0]) and check_is_num(list[1])):
@@ -58,7 +58,7 @@ def divide(traceback_i,lines,list):
         else:
             traceback(traceback_i,lines,"A parameter aint a number dumbass")
     except:
-        traceback(traceback_i,lines,"Number out of bounds")
+        traceback(traceback_i,lines,"Number out of bounds dumbass")
 def power(traceback_i,lines,list):
     try:
         if(check_is_num(list[0]) and check_is_num(list[1])):
@@ -71,7 +71,7 @@ def power(traceback_i,lines,list):
         else:
             traceback(traceback_i,lines,"A parameter aint a number dumbass")
     except:
-        traceback(traceback_i,lines,"Number out of bounds")
+        traceback(traceback_i,lines,"Number out of bounds dumbass")
 def log(traceback_i,lines,list):
     try:
         if(check_is_num(list[0]) and check_is_num(list[1])):
@@ -84,7 +84,7 @@ def log(traceback_i,lines,list):
         else:
             traceback(traceback_i,lines,"A parameter aint a number dumbass")
     except:
-        traceback(traceback_i,lines,"Number out of bounds")
+        traceback(traceback_i,lines,"Number out of bounds dumbass")
 def sin(traceback_i,lines,list):
     if(check_is_num(list[0])):
         return math.sin(list[0])
@@ -100,7 +100,7 @@ def tan(traceback_i,lines,list):
         try:
             return math.tan(list[0])
         except:
-            traceback(traceback_i,lines,"Number out of bounds")
+            traceback(traceback_i,lines,"Number out of bounds dumbass")
     else:
         traceback(traceback_i,lines,"Must be a number in here dumbass")
 def num(traceback_i,lines,list):
@@ -339,8 +339,8 @@ def logic(count = 0,parameters = {},traceback_i = [0]):
                     traceback(traceback_i,lines,"Didnt find your function dumbass")
             else:
                 if(disable == -1 and line != ['']):
-                    traceback(traceback_i,lines,"You didnt put a command we recognize (You cant have lines at the beginning of variables or functions)")
+                    traceback(traceback_i,lines,"You didnt put a command we recognize you dumbass(You cant have lines at the beginning of variables or functions)")
             i+=1
         if(disable != -1):
-            traceback(traceback_i,lines,"Statement "+lines[disable].strip().lstrip()+" on line "+str(disable+1)+" has no corresponding done statement")
+            traceback(traceback_i,lines,"Statement "+lines[disable].strip().lstrip()+" on line "+str(disable+1)+" has no corresponding done statement dumbass")
 logic()
