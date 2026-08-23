@@ -1,6 +1,6 @@
 A programming language I made for the fun of it. It runs Python in the backend.
 
-Called Dumbass355, cause every error message insults you and it was done in 355 lines of python code. (1/2 of which is just built in functions).
+Called Dumbass346, cause every error message insults you and it was done in 355 lines of python code. (1/2 of which is just built in functions).
 
 I winged this shit in 5 days, took a 2 week break, then finished it in like 2 more days. No ai or research on how good interpreters actually work (very smart of me).
 
