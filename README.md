@@ -10,6 +10,8 @@ To run, make sure both compiler.py and input.txt are in the same folder on your 
 
 Syntax/Instructions/Explanation of inner workings:
 
+(Look at input.txt for some example code).
+
 The interpreter compiles line by line. It ignores trailing and leading whitespace.
 
 Each line must be separated into chunks spaced apart by the | symbol. If you wish to put this symbol in a string, variable name, parameter name or function name, put 2 next to each other (ex: ||) and the interpreter will read it as a | symbol rather than a divider. Note that this will not work if you want to put this symbol at the beginning of a variable name, parameter name or function name, as the interpreter will believe the symbol is part of an earlier chunk.
