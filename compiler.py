@@ -334,8 +334,7 @@ def logic(count = 0,parameters = {},traceback_i = [0]):
                                 variables["last"] = int(variables["last"])
                     else:
                         traceback(traceback_i,lines,"UNRECOGNIZED FUNCTION DUMBASS")
-                except Exception as e:
-                    print(e)
+                except:
                     traceback(traceback_i,lines,"Didnt find your function dumbass")
             else:
                 if(disable == -1 and line != ['']):
