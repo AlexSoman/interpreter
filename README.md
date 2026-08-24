@@ -174,4 +174,3 @@ Used python so I dont need to do any low level stuff or make a compiler for ever
 
 TODO: 
 1. lists and some more useful built-in functions (only if I have to I dont wanna change the title name)>
-2. make some fractal in ur own language. 
