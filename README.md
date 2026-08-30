@@ -2,9 +2,7 @@ A programming language I made for the fun of it. It runs Python in the backend.
 
 Called Dumbass345, cause every error message insults you and it was done in 345 lines of python code. (1/2 of which is just built in functions).
 
-I winged this shit in 5 days, took a 2 week break, then finished it in like 2 more days. No ai or research on how good interpreters actually work (very smart of me).
-
-Completely useless and will probably be slow, so don't actually program in it unless ur insane or me.
+I made most of this in 5 days, took a 2 week break, then finished it in like 2 more days. No AI or research on how interpreters actually work.
 
 To run, make sure both compiler.py and input.txt are in the same folder on your device. Input the code into input.txt and run compiler.py; you should see the output on your terminal
 
@@ -52,7 +50,7 @@ call|mult|4|3
 
 var|12|last
 
-If a variable gets set to a float, but the float equals an int, the interpreter will set it equal to an int in the backend automatically (this is true for all commands). This is probably a stupid idea since there are good reasons to keep ints and floats separate, but all my built-in functions do algebraic manipulation, and I think Python can handle those between ints and floats well, so we are just going to roll with it.
+If a variable gets set to a float, but the float equals an int, the interpreter will set it equal to an int in the backend automatically (this is true for all commands). All my built-in functions do algebraic manipulation, and Python can handle that between ints and floats well, 
 End notes.
 
 
@@ -75,7 +73,7 @@ Command 4: if
 
 EX: if|1|<|2
 
-Conditional statements. Chunks 2 and 4 must either be both strings or both ints.
+Conditional statements. Chunks 2 and 4 must either be both strings or both numbers.
 
 The operator in chunk 3 can either be 
 
@@ -120,7 +118,7 @@ Functions are only defined once the parameter reaches the def statement for the 
 
 All functions have global domain, and once defined cannot be reset. The only way to have 2 functions defined with the same name is if one is in a conditional/function that is never called.
 
-The recursion limit for functions is 464. I dunno why its this number but after 465 calls my custom recursion depth error message stops printing so yeah. 
+The recursion limit for functions is 464. 
 
 
 Command 7: call
@@ -128,9 +126,9 @@ Command 7: call
 
 Ex: call|print|"YES!!!
 
-Calls a function. The function can either be a built-in function or custom function. The first chunk after call must be the function names, and you must provide all the parameters. The variable last will take in the return value of the function, and if the function has none then last will be set equal to one. Parameters can be either strings or ints.
+Calls a function. The function can either be a built-in function or custom function. The first chunk after call must be the function names, and you must provide all the parameters. The variable last will take in the return value of the function, and if the function has none then last will be set equal to one. Parameters can be either strings or numbers.
 
-Here are all the built-in functions. Most are pretty obvious in what they do, and will error if provided the wrong type of parameter or for other reasons (ex: divide by zero). There are also no operators in my language (like + or *), you have to use functions which is why this language sucks and why the interpreter is so small).
+Here are all the built-in functions. Most are pretty obvious in what they do, and will error if provided the wrong type of parameter or for other reasons (ex: divide by zero). There are also no operators in my language (like + or *), you have to use functions.
 
 add: adds 2 numbers
 
@@ -170,7 +168,4 @@ Should an error occur, the error message will include the line number, the text 
 
 Explanation of inner workings
 
-Used python so I dont need to do any low level stuff or make a compiler for every single hardware architecture. I made a custom split function to handle my notation, made 2 stacks (that are actually lists) to handle nested statements and errors, had a couple dictionaries to handle storing variables and functions, and put all the interpretor logic in a function so that I could recall it for custom functions. Also had to edit python built-in functions to handle my notation and put a gazillion try-excepts and if-elif-else chains to handle errors. Rest is obvious stuff go figure it out.
-
-TODO: 
-1. lists and some more useful built-in functions (only if I have to I dont wanna change the title name)>
+Used python so I dont need to do any low level stuff or make a compiler for every single hardware architecture. I made a custom split function to handle my notation, made 2 stacks (that are actually lists) to handle nested statements and errors, had a couple dictionaries to handle storing variables and functions, and put all the interpretor logic in a function so that I could recall it for custom functions. Also had to edit python built-in functions to handle my notation and put a gazillion try-excepts and if-elif-else chains to handle errors. Rest is obvious stuff.
