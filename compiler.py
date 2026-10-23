@@ -1,11 +1,11 @@
 from os import _exit
 import math
 def check_is_string(string):
-    if(not check_is_num(string)):
+    if(not check_is_num(string) and string != ""):
         return string[0] == "\""
     return False
 def check_is_num(string):
-    if(string == "inf" or string == "-inf" or string == "nan"):
+    if(string == "inf" or string == "-inf" or string == "nan" or string == ""):
         return False
     try:
         float(string)
@@ -24,54 +24,6 @@ def length(traceback_i,lines,list):
         return len(list[0][1:])
     else:
         traceback(traceback_i,lines,"You didnt put a string variable in here dumbass")
-def add(traceback_i,lines,list):
-    try:
-        if(check_is_num(list[0]) and check_is_num(list[1])):
-            return list[0]+list[1]
-        else:
-            traceback(traceback_i,lines,"A parameter aint a number dumbass")
-    except:
-        traceback(traceback_i,lines,"Number out of bounds dumbass")
-def subtract(traceback_i,lines,list):
-    try:
-        if(check_is_num(list[0]) and check_is_num(list[1])):
-            return list[0]-list[1]
-        else:
-            traceback(traceback_i,lines,"A parameter aint a number dumbass")
-    except:
-        traceback(traceback_i,lines,"Number out of bounds dumbass")
-def multiply(traceback_i,lines,list):
-    try:
-        if(check_is_num(list[0]) and check_is_num(list[1])):
-            return list[0]*list[1]
-        else:
-            traceback(traceback_i,lines,"A parameter aint a number dumbass")
-    except:
-        traceback(traceback_i,lines,"Number out of bounds dumbass")
-def divide(traceback_i,lines,list):
-    try:
-        if(check_is_num(list[0]) and check_is_num(list[1])):
-            if(list[1] != 0):
-                return list[0] / list[1]
-            else:
-                traceback(traceback_i,lines,"Divde by zero error dumbass")
-        else:
-            traceback(traceback_i,lines,"A parameter aint a number dumbass")
-    except:
-        traceback(traceback_i,lines,"Number out of bounds dumbass")
-def power(traceback_i,lines,list):
-    try:
-        if(check_is_num(list[0]) and check_is_num(list[1])):
-            if(list[0] == 0 and list[1] < 0):
-                traceback(traceback_i,lines,"No negative exponents if base = 0 dumbass")
-            if(list[0] < 0 and list[1] != int(list[1])):
-                    traceback(traceback_i,lines,"No fractional exponents if base < 0 dumbass")
-            else:
-                return list[0]**list[1]
-        else:
-            traceback(traceback_i,lines,"A parameter aint a number dumbass")
-    except:
-        traceback(traceback_i,lines,"Number out of bounds dumbass")
 def log(traceback_i,lines,list):
     try:
         if(check_is_num(list[0]) and check_is_num(list[1])):
@@ -147,25 +99,52 @@ def append(traceback_i,lines,list):
         return "\""+list[0][1:]+list[1][1:]
     else:
         traceback(traceback_i,lines,"Parameters must be strings dumbass")
-def exits(list):
+def exits(traceback_i,lines,list):
     _exit(0)
 def get_val(traceback_i,lines,value,trace,parameters):
-    val = 0
     if(value in parameters):
-        val = parameters[value]
-    elif(value in variables):
-        val = variables[value]
-    elif(check_is_string(value)):
-        val = value
-    elif(check_is_num(value)):
+        return parameters[value]
+    if(value in variables):
+        return variables[value]
+    if(check_is_string(value)):
+        return value
+    if(check_is_num(value)):
         if(int(float(value)) == float(value)):
-            val = int(value)
-        else:
-            val= float(value)
-    else:
-        traceback(traceback_i,lines,"Dont recognize your value dumbass")
-    return val
-built_in_functions = {"exit":(0,exits),"print":(1,p),"len":(1,length),"add":(2,add),"subtract":(2,subtract),"mult":(2,multiply),"div":(2,divide),"pow":(2,power),"log":(2,log),"sin":(1,sin),"cos":(1,cos),"tan":(1,tan),"floor":(1,floor),"ceil":(1,ceil),"num":(1,num),"str":(1,string),"substring":(3,substring),"contains":(2,contains),"append":(2,append)}
+            return int(value)
+        return float(value)
+    try:
+        order_of_operations = {"+":0,"-":0,"*":1,"/":1,"^":2}
+        operations = {"+":(lambda first,second: first+second),"-":(lambda first,second: first-second),"*":(lambda first,second: first*second),"/":(lambda first,second: first/second),"^":(lambda first,second: first**second)}
+        for i in range(max(order_of_operations.values())+1):
+            parantheses_stack = 0
+            for j in range(len(value)-1,-1,-1):
+                if(value[j] == ")"):
+                    parantheses_stack+=1
+                if(value[j] == "("):
+                    parantheses_stack =  max(parantheses_stack-1,0)
+                if(value[j] in order_of_operations and order_of_operations[value[j]] == i and parantheses_stack == 0):
+                    first,second = get_val(traceback_i,lines,value[0:j],"",parameters),get_val(traceback_i,lines,value[j+1:len(value)],"",parameters)
+                    if(check_is_string(second)):
+                        traceback(traceback_i,lines,"Value: "+second+" operates "+value[j]+" on a string dumbass")
+                    if(value[j] == "/" and second == 0):
+                        traceback(traceback_i,lines,"At value " +value+": Division by zero dumbass")
+                    if(value[j] == "^" and first == 0 and second < 0):
+                        traceback(traceback_i,lines,"At value " +value+": No negative exponents if base = 0 dumbass")
+                    if(value[j] == "^" and first < 0 and second != int(second)):
+                        traceback(traceback_i,lines,"At value " +value+": No fractional exponents if base < 0 dumbass")
+                    val = operations[value[j]](first,second)
+                    if(int(float(val)) == float(val)):
+                        return int(val)
+                    return float(val)
+    except Exception as e:
+        print(e)
+        traceback(traceback_i,lines,"Expression yielded number too large dumbass")
+    if(value != "" and value[0] == "(" and value[len(value)-1] == ")"):
+        return get_val(traceback,lines,value[1:len(value)-1],"",parameters)
+    if(trace == ""):
+        traceback(traceback_i,lines,"Dont recognize value "+value+" dumbass")
+    traceback(traceback_i,lines,trace)
+built_in_functions = {"exit":(0,exits),"print":(1,p),"len":(1,length),"log":(2,log),"sin":(1,sin),"cos":(1,cos),"tan":(1,tan),"floor":(1,floor),"ceil":(1,ceil),"num":(1,num),"str":(1,string),"substring":(3,substring),"contains":(2,contains),"append":(2,append)}
 functions = {}
 functions_start = {}
 path = "input.txt "
@@ -208,19 +187,7 @@ def logic(count = 0,parameters = {},traceback_i = [0]):
         while  i < len(lines):
             traceback_i[len(traceback_i)-1] = i
             line =better_split(lines[i].strip().lstrip())
-            #print(line)
-            # things to do with each line
-            # var - variable assignment
-            # def - function definition
-            # end - ends function definition
-            # return - returns value.
-            # if - conditional statement
-            # while - loop statement
-            # done - ends if statement
-            # final - ends while statement
-            # exit - exits
-            if(line[0] == "var" and disable == -1):
-                # variable assignment
+            if(line[0] == "var" and disable == -1):# variable assignment
                 try:
                     if("\"" == line[1][0]):
                         traceback(traceback_i,lines,"No quotations. dumbass")
@@ -234,8 +201,7 @@ def logic(count = 0,parameters = {},traceback_i = [0]):
                             traceback(traceback_i,lines,"Need a value dumbass")
                 except:
                     traceback(traceback_i,lines,"Messed up variable syntax. dumbass")
-            elif(line[0] == "def"):
-                # function definition
+            elif(line[0] == "def"):# function definition
                 disable_stack.append(i)
                 if(disable == -1):
                     try:
@@ -254,8 +220,7 @@ def logic(count = 0,parameters = {},traceback_i = [0]):
                             disable = i
                     except:
                         traceback(traceback_i,lines,"Messed up Function syntax dumbass ")
-            elif(line[0] == "if" or line[0] == "while"):
-                # conditional statement
+            elif(line[0] == "if" or line[0] == "while"):# conditional statement
                 disable_stack.append(i)
                 if (disable == -1):
                     if(len(line)-1 < 3):
