@@ -130,16 +130,6 @@ Calls a function. The function can either be a built-in function or custom funct
 
 Here are all the built-in functions. Most are pretty obvious in what they do, and will error if provided the wrong type of parameter or for other reasons (ex: divide by zero). There are also no operators in my language (like + or *), you have to use functions.
 
-add: adds 2 numbers
-
-subtract: subtracts 2 numbers
-
-mult: multiply 2 numbers
-
-div: divides 2 numbers (numerator then denominator)
-
-pow: takes the power of 2 numbers (first is base, second is exponent)
-
 log: takes the logarithm of the 2 numbers (first is the base)
 
 sin: takes the sine of a number
